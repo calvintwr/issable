@@ -51,6 +51,7 @@ function simpleAPIChecks(stringPayload, arrayPayload) {
 
 ```ts
 is(stringVar).not().boolean() // true
+
 // is equivalent to
 
 import { not } from 'issable'
@@ -81,5 +82,5 @@ import { define } from 'issable'
             return true
         },
     })
-    
+})
 ```

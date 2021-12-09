@@ -1,6 +1,6 @@
 {
   "name": "issable",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Swiss army knife for runtime payload sanitisation and type-checking.",
   "main": "./dist/node/index.js",
   "scripts": {
@@ -35,5 +35,13 @@
     "ts-node": "^10.4.0",
     "ts-node-dev": "^1.1.8",
     "tsc": "^2.0.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calvintwr/issable.git"
+  },
+  "bugs": {
+    "url": "https://github.com/calvintwr/issable/issues"
+  },
+  "homepage": "https://github.com/calvintwr/issable#readme"
 }

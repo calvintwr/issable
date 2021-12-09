@@ -17,7 +17,7 @@ var is = function (candidate, name) {
         _name: name,
         throw: true,
         operator: 'is',
-        exact: false,
+        _exact: false,
         _statusCode: 400,
         _msg: '',
         _checker: function (typing) {
@@ -25,6 +25,8 @@ var is = function (candidate, name) {
                 you_are_not_1.default.is(typing, this.candidate, this._name, this._msg);
             }
             catch (err) {
+                if (this.throw === false)
+                    return false;
                 if (this.operator === 'not')
                     return true;
                 this._errorModifier(err);
@@ -34,6 +36,8 @@ var is = function (candidate, name) {
                 return true;
             }
             else if (this.operator === 'not') {
+                if (this.throw === false)
+                    return false;
                 var err = new you_are_not_1.default.NotTypeError("".concat(this._name, " is of type ").concat(typing, "."));
                 this._errorModifier(err);
                 throw err;
@@ -42,45 +46,64 @@ var is = function (candidate, name) {
                 throw Error('Fatal: Operator should only be `is` or `not`.');
             }
         },
+        /** Check for string. */
         string: function () {
             return this._checker('string');
         },
+        /** Check for `number`. NaN is not a `number`.*/
         number: function () {
             return this._checker('number');
         },
+        /** Check for `array`. `Array` will not be `object`. */
         array: function () {
             return this._checker('array');
         },
+        /** Check for `boolean`. */
         boolean: function () {
             return this._checker('boolean');
         },
+        /** Check for `function`. */
         function: function () {
             return this._checker('function');
         },
+        /** Check for `null`. `null` will not be object. */
         null: function () {
             return this._checker('null');
         },
+        /** Check for `undefined`. */
         undefined: function () {
             return this._checker('undefined');
         },
+        /** Check for `symbol`. */
         symbol: function () {
             return this._checker('symbol');
         },
+        /** Check for `NaN`. */
         nan: function () {
             return this._checker('nan');
         },
+        /** Check for `undefined` and `null`. */
         optional: function () {
             return this._checker('optional');
         },
+        /** Check for `number` that is an integer and not float. */
         integer: function () {
             return this._checker('integer');
         },
+        /**
+         * Check for `object`. `Array` and `null` are not treated as object, and will fail this.
+         * @param schema [Optional] Provide a schema to check. For example, { name: 'John', age: 20 } will pass schema { name: 'string' , age: 'number'}
+         * For optionals in schema, denote with '?'. For e.g., { 'optionalKey?': 'boolean' }.
+         * If a value can be expected to be in multiple types, denote using an array: For e.g, { 'multipleTypes': ['string', 'number'] }
+         */
         object: function (schema) {
             if (typeof schema === 'undefined') {
                 try {
                     return you_are_not_1.default.is('object', this.candidate, this._name, this._msg);
                 }
                 catch (err) {
+                    if (this.throw === false)
+                        return false;
                     this._errorModifier(err);
                     throw err;
                 }
@@ -90,15 +113,19 @@ var is = function (candidate, name) {
                 you_are_not_1.default.is('object', schema);
             }
             catch (err) {
-                // TODO: modify
+                this._errorModifier(err);
+                err.statusCode = 500;
+                err.message = 'Internal error: Candidate or schema is not object.';
                 throw err;
             }
             if (this.operator === 'is') {
                 var result;
                 try {
-                    result = you_are_not_1.default.scrub(name || 'Anonymous Object', schema, candidate, this.exact);
+                    result = you_are_not_1.default.scrub(name || 'Anonymous Object', schema, candidate, this._exact);
                 }
                 catch (err) {
+                    if (this.throw === false)
+                        return false;
                     this._errorModifier(err);
                     throw err;
                 }
@@ -113,30 +140,45 @@ var is = function (candidate, name) {
                     // so means it is true.
                     return this.candidate;
                 }
+                if (this.throw === false)
+                    return false;
                 var err = new you_are_not_1.default.NotTypeError("Payload is not the same as defined schema for ".concat(this._name));
                 this._errorModifier(err);
                 throw err;
             }
         },
+        /** Custom checks
+         * @param typing The name of the custom check defined.
+         */
         custom: function (typing) {
             return this._checker(typing);
         },
+        /** Disable throwing of error. Will return false instead. */
         safe: function () {
             this.throw = false;
             return this;
         },
+        /** Exact match for `object` check. */
+        exact: function () {
+            this._exact = true;
+            return this;
+        },
+        /** Status code for API response. Will be returned in the `statusCode` property of the Error object thrown. */
         statusCode: function (code) {
             this._statusCode = code;
             return this;
         },
+        /** Another syntax method. E.g, is(someVar).not().number() */
         not: function () {
             this.operator = 'not';
             return this;
         },
+        /** Custom message if error is thrown. */
         msg: function (errorMessage) {
             this._msg = errorMessage;
             return this;
         },
+        /** Name of parameter. An alternate way: is(someVar, 'fooPayLoad') is equivalent to is(someVar).name('fooPayload') */
         name: function (name) {
             this._name = name;
             return this;
@@ -152,7 +194,7 @@ var is = function (candidate, name) {
             }
             error.name = error.name.replace('(NotTS)', '(Issable)');
             return error;
-        }
+        },
     };
     return methods;
 };
@@ -176,7 +218,7 @@ var define = function (options) {
     you_are_not_1.default.defineType({
         primitive: options.primitives,
         type: options.nameOfTyping,
-        pass: options.toPass
+        pass: options.toPass,
     });
 };
 exports.define = define;
