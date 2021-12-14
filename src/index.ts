@@ -231,4 +231,4 @@ const define = (options: {
 }
 
 export default is
-export { is, not, define }
+export { is, not, define, NotTypeError as IssableError }

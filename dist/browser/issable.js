@@ -1,5 +1,5 @@
 /*!
- * issable v0.1.0
+ * issable v0.1.2
  * (c) 2021 calvintwr
  * Release under MIT license.
  */
@@ -15,15 +15,18 @@ var __importDefault = void 0 && (void 0).__importDefault || function (mod) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.define = exports.not = exports.is = void 0;
+exports.IssableError = exports.define = exports.not = exports.is = void 0;
 
 var you_are_not_1 = __importDefault(require("you-are-not"));
+
+var NotTypeError_1 = __importDefault(require("you-are-not/dist/node/core/NotTypeError"));
+
+exports.IssableError = NotTypeError_1.default;
 /**
  * The main interface of Issable.
  * @param candidate The argument that you are checking.
  * @param name [Optional] Give the argument you are checking for a name.
  */
-
 
 var is = function is(candidate, name) {
   if (name === void 0) {
@@ -272,7 +275,7 @@ var define = function define(options) {
 exports.define = define;
 exports.default = is;
 
-},{"you-are-not":15}],2:[function(require,module,exports){
+},{"you-are-not":15,"you-are-not/dist/node/core/NotTypeError":3}],2:[function(require,module,exports){
 'use strict';
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }

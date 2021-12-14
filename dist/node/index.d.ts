@@ -134,5 +134,5 @@ declare const define: (options: {
     toPass: (candidate: any) => boolean;
 }) => void;
 export default is;
-export { is, not, define };
+export { is, not, define, NotTypeError as IssableError };
 //# sourceMappingURL=index.d.ts.map

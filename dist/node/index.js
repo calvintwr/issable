@@ -3,8 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.define = exports.not = exports.is = void 0;
+exports.IssableError = exports.define = exports.not = exports.is = void 0;
 var you_are_not_1 = __importDefault(require("you-are-not"));
+var NotTypeError_1 = __importDefault(require("you-are-not/dist/node/core/NotTypeError"));
+exports.IssableError = NotTypeError_1.default;
 /**
  * The main interface of Issable.
  * @param candidate The argument that you are checking.
