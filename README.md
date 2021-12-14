@@ -1,4 +1,6 @@
->*Issable* -- Your Swiss Army Knife for runtime payload sanitisation and type-checking. 
+>*Issable* -- Your Swiss Army Knife for runtime payload sanitisation and type-checking. Provides actionable error messges out-of-the-box.
+
+There should be no learning curve for runtime payload sanitisation and type-checking. Issable is lightweight, readable, and extensible when required.
 
 ## Installation
 ```
