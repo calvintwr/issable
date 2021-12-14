@@ -32,7 +32,7 @@ app.get('/', (req, res, next) => {
 
     const sanitised = is(payload)
         .exact()
-        .statusCode(400) // error object will contain statusCode for API error response handling.
+        .statusCode(400) // Error instance will contain property `statusCode`. See #errorHandler, `error.statusCode` below.
         .object(schema) // throws error if not matched, with details on mismatch with schema.
 
     // if check is passed, `sanitised` contains the sanitised object for use
