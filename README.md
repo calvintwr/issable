@@ -6,11 +6,16 @@ npm install --save issable
 ```
 
 ## Usage
+
 ```ts
 import { is } from 'issable'
 
 is('foo').string() // returns true
 is('foo').boolean() // Throws an error
+```
+Also supports CommonJS Require
+```js
+const { is, not, define } = require('issable')
 ```
 
 ## Intuitive style
