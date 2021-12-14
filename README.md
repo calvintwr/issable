@@ -123,7 +123,7 @@ not(stringVar).string() // throws error
 `.symbol()` 
 `.nan()` 
 
-## Reversing Native JS Quirks
+## Negating Native JS Quirks
 Some native JS quirks that constantly trips programmers and introduce bugs, are removed by Issable.
 ```js
 typeof [] // object
