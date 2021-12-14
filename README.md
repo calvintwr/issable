@@ -29,7 +29,7 @@ app.get('/', (req, res, next) => {
         name: 'string',
         age: 'number',
         mobile: ['string', 'number'],
-        "somethingOptional?": 'string
+        "somethingOptional?": 'string'
     }
 
     const sanitised = is(payload)
@@ -112,16 +112,44 @@ not(stringVar).string() // throws error
 ```
 
 ## Available methods
+**Checks**
+
 `.string()` 
+
 `.number()` 
+
 `.array()` 
+
 `.object()` 
+
 `.function()` 
+
 `.boolean()` 
+
 `.null()` 
+
 `.undefined()` 
+
 `.symbol()` 
-`.nan()` 
+
+`.nan()`
+
+
+**Others**
+
+`.msg(string)` - Define your custom error message.
+
+`.name(string)` - An alternative way to name your payload for error messages. `is(26, 'age').number()` is the same as `is(26).name('age').number()`.
+
+`.statusCode(number)` - HTTP response status code. See example above.
+
+`.not()` - `is(1).not().number()`.
+
+`.exact()` - For use with comparing objects with schemas. See example above.
+
+`.safe()` - Will not throw error. Used like `is(1).safe().string()`.
+
+`.custom(nameOfCheck)` - Custom check. See example above.
 
 ## Negating Native JS Quirks
 Some native JS quirks that constantly trips programmers and introduce bugs, are removed by Issable.
