@@ -5,8 +5,6 @@
   "main": "./dist/node/index.js",
   "scripts": {
     "test": "mocha -r ts-node/register './test/**/*.ts'",
-    "dev": "DEBUG=malt:* ts-node-dev --respawn ./src/index.ts",
-    "start": "DEBUG=malt:* node ./dist/index.js",
     "browserify": "browserify dist/node/index.js > dist/browser/issable.js --standalone Issable --global-transform [ babelify --configFile ./.dist.babelrc ] -p [ @jsdevtools/browserify-banner --template \"<%= pkg.name %> v<%= pkg.version %>\n(c) 2021 <%= pkg.author %>\nRelease under <%= pkg.license %> license.\" ]",
     "browserify:minify": "browserify dist/node/index.js > dist/browser/issable.min.js --standalone Issable --global-transform [ babelify --configFile ./.dist.babelrc ] -p tinyify -p [ @jsdevtools/browserify-banner --template \"<%= pkg.name %> v<%= pkg.version %>\n(c) 2021 <%= pkg.author %>\nRelease under <%= pkg.license %> license.\" ]",
     "build": "npm run tsc && mkdirp dist/browser; mkdirp dist/node && npm run browserify && npm run browserify:minify",
